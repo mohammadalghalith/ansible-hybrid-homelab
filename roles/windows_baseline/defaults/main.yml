@@ -1,5 +1,5 @@
 ---
-windows_required_services:
+windows_baseline_required_services:
   - WinRM
   - W32Time
-windows_features: []
+windows_baseline_features: []
