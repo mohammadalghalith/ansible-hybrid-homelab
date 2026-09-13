@@ -8,4 +8,3 @@ collections:
     version: ">=2.3.0"
   - name: community.windows
     version: ">=2.2.0"
-
