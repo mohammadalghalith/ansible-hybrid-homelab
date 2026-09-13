@@ -1,0 +1,33 @@
+---
+- name: Ensure required Windows services are running
+  ansible.windows.win_service:
+    name: "{{ item }}"
+    start_mode: auto
+    state: started
+  loop: "{{ windows_required_services }}"
+
+- name: Install administration features
+  ansible.windows.win_feature:
+    name: "{{ windows_features }}"
+    state: present
+    include_management_tools: true
+  when: windows_features | length > 0
+
+- name: Create local support account
+  ansible.windows.win_user:
+    name: "{{ support_account }}"
+    password: "{{ vault_windows_password }}"
+    groups:
+      - Administrators
+    state: present
+    update_password: on_create
+    password_never_expires: false
+
+- name: Install all critical and security updates
+  ansible.windows.win_updates:
+    category_names:
+      - CriticalUpdates
+      - SecurityUpdates
+    state: installed
+    reboot: false
+
