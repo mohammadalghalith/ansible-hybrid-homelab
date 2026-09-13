@@ -13,7 +13,7 @@
 
     - name: Install configuration backup script
       ansible.builtin.template:
-        src: "{{ playbook_dir }}/../templates/backup-config.sh.j2"
+        src: "{{ playbook_dir | dirname }}/templates/backup-config.sh.j2"
         dest: /usr/local/sbin/backup-config
         owner: root
         group: root

@@ -11,15 +11,12 @@
       delegate_to: localhost
       run_once: true
   tasks:
-    - name: Check failed systemd services
-      ansible.builtin.command: systemctl --failed --no-legend
-      register: failed_services
-      changed_when: false
-      failed_when: false
+    - name: Gather service facts
+      ansible.builtin.service_facts:
 
     - name: Write Linux health report locally
       ansible.builtin.template:
-        src: "{{ playbook_dir }}/../templates/linux-health.txt.j2"
+        src: "{{ playbook_dir | dirname }}/templates/linux-health.txt.j2"
         dest: "{{ playbook_dir }}/../artifacts/{{ inventory_hostname }}-health.txt"
         mode: "0640"
       delegate_to: localhost
@@ -31,12 +28,12 @@
     - name: Read required Windows services
       ansible.windows.win_service_info:
         name: "{{ item }}"
-      loop: "{{ windows_required_services }}"
+      loop: "{{ windows_baseline_required_services }}"
       register: windows_service_status
 
     - name: Write Windows health report locally
       ansible.builtin.template:
-        src: "{{ playbook_dir }}/../templates/windows-health.txt.j2"
+        src: "{{ playbook_dir | dirname }}/templates/windows-health.txt.j2"
         dest: "{{ playbook_dir }}/../artifacts/{{ inventory_hostname }}-health.txt"
         mode: "0640"
       delegate_to: localhost
