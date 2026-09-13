@@ -1,0 +1,6 @@
+.DS_Store
+.ansible/
+*.retry
+artifacts/
+inventories/lab/group_vars/vault.yml
+
