@@ -1,0 +1,9 @@
+---
+linux_admin_group: support-admins
+linux_packages:
+  - curl
+  - rsync
+  - ufw
+linux_allowed_tcp_ports:
+  - "22"
+
