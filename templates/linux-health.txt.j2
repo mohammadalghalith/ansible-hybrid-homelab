@@ -5,5 +5,8 @@ Kernel: {{ ansible_kernel }}
 Memory: {{ ansible_memtotal_mb }} MB
 Root disk available: {{ ansible_mounts | selectattr('mount', 'equalto', '/') | map(attribute='size_available') | first | default('unknown') }} bytes
 Failed services:
-{{ failed_services.stdout | default('None') }}
-
+{% for service in ansible_facts.services | dict2items | selectattr('value.state', 'equalto', 'failed') %}
+- {{ service.key }}
+{% else %}
+None
+{% endfor %}
