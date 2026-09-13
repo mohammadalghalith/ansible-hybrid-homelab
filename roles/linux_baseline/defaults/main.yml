@@ -6,4 +6,3 @@ linux_packages:
   - ufw
 linux_allowed_tcp_ports:
   - "22"
-
