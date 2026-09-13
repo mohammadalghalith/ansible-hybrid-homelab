@@ -4,14 +4,14 @@
     name: "{{ item }}"
     start_mode: auto
     state: started
-  loop: "{{ windows_required_services }}"
+  loop: "{{ windows_baseline_required_services }}"
 
 - name: Install administration features
   ansible.windows.win_feature:
-    name: "{{ windows_features }}"
+    name: "{{ windows_baseline_features }}"
     state: present
     include_management_tools: true
-  when: windows_features | length > 0
+  when: windows_baseline_features | length > 0
 
 - name: Create local support account
   ansible.windows.win_user:
