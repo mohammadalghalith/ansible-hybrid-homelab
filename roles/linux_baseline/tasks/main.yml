@@ -1,27 +1,27 @@
 ---
 - name: Install administration packages
   ansible.builtin.apt:
-    name: "{{ linux_packages }}"
+    name: "{{ linux_baseline_packages }}"
     state: present
     update_cache: true
 
 - name: Create support administrators group
   ansible.builtin.group:
-    name: "{{ linux_admin_group }}"
+    name: "{{ linux_baseline_admin_group }}"
     state: present
 
 - name: Create support account
   ansible.builtin.user:
     name: "{{ support_account }}"
-    groups: "{{ linux_admin_group }}"
+    groups: "{{ linux_baseline_admin_group }}"
     append: true
     shell: /bin/bash
     create_home: true
 
 - name: Grant support administrators sudo access
   ansible.builtin.copy:
-    content: "%{{ linux_admin_group }} ALL=(ALL) ALL\n"
-    dest: "/etc/sudoers.d/{{ linux_admin_group }}"
+    content: "%{{ linux_baseline_admin_group }} ALL=(ALL) ALL\n"
+    dest: "/etc/sudoers.d/{{ linux_baseline_admin_group }}"
     owner: root
     group: root
     mode: "0440"
@@ -32,7 +32,7 @@
     rule: allow
     port: "{{ item }}"
     proto: tcp
-  loop: "{{ linux_allowed_tcp_ports }}"
+  loop: "{{ linux_baseline_allowed_tcp_ports }}"
   notify: Reload firewall
 
 - name: Enable host firewall
