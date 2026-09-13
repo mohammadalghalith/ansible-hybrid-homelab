@@ -1,0 +1,42 @@
+---
+- name: Collect Linux health information
+  hosts: linux
+  gather_facts: true
+  pre_tasks:
+    - name: Create local report directory
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/../artifacts"
+        state: directory
+        mode: "0750"
+      delegate_to: localhost
+      run_once: true
+  tasks:
+    - name: Check failed systemd services
+      ansible.builtin.command: systemctl --failed --no-legend
+      register: failed_services
+      changed_when: false
+      failed_when: false
+
+    - name: Write Linux health report locally
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/linux-health.txt.j2"
+        dest: "{{ playbook_dir }}/../artifacts/{{ inventory_hostname }}-health.txt"
+        mode: "0640"
+      delegate_to: localhost
+
+- name: Collect Windows health information
+  hosts: windows
+  gather_facts: true
+  tasks:
+    - name: Read required Windows services
+      ansible.windows.win_service_info:
+        name: "{{ item }}"
+      loop: "{{ windows_required_services }}"
+      register: windows_service_status
+
+    - name: Write Windows health report locally
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/windows-health.txt.j2"
+        dest: "{{ playbook_dir }}/../artifacts/{{ inventory_hostname }}-health.txt"
+        mode: "0640"
+      delegate_to: localhost

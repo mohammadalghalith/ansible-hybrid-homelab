@@ -1,0 +1,13 @@
+---
+- name: Apply Linux server baseline
+  hosts: linux
+  become: true
+  roles:
+    - role: linux_baseline
+
+- name: Apply Windows server baseline
+  hosts: windows
+  gather_facts: true
+  roles:
+    - role: windows_baseline
+
