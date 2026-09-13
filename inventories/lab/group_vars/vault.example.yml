@@ -1,0 +1,5 @@
+---
+# Copy this file to vault.yml, replace the placeholders, and encrypt it.
+vault_windows_username: LAB\\labadmin
+vault_windows_password: CHANGE_ME
+

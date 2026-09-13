@@ -1,0 +1,6 @@
+---
+lab_timezone: Asia/Amman
+support_account: labadmin
+backup_retention_days: 14
+backup_destination: /srv/backups
+

@@ -1,0 +1,12 @@
+---
+ansible_user: labadmin
+linux_admin_group: support-admins
+linux_packages:
+  - curl
+  - git
+  - rsync
+  - ufw
+  - unattended-upgrades
+linux_allowed_tcp_ports:
+  - "22"
+

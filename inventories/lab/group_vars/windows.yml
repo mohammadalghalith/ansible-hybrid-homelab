@@ -1,0 +1,14 @@
+---
+ansible_user: "{{ vault_windows_username }}"
+ansible_password: "{{ vault_windows_password }}"
+ansible_connection: winrm
+ansible_winrm_transport: ntlm
+ansible_port: 5986
+ansible_winrm_scheme: https
+ansible_winrm_server_cert_validation: validate
+windows_required_services:
+  - WinRM
+  - W32Time
+windows_features:
+  - RSAT-AD-Tools
+
