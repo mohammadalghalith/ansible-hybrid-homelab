@@ -30,4 +30,3 @@
       - SecurityUpdates
     state: installed
     reboot: false
-
