@@ -9,4 +9,3 @@ linux_packages:
   - unattended-upgrades
 linux_allowed_tcp_ports:
   - "22"
-

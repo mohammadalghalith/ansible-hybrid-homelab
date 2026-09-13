@@ -11,4 +11,3 @@ windows_required_services:
   - W32Time
 windows_features:
   - RSAT-AD-Tools
-
