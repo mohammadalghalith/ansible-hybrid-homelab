@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+destination="{{ backup_destination }}"
+timestamp="$(date +%Y%m%d-%H%M%S)"
+archive="${destination}/{{ inventory_hostname }}-config-${timestamp}.tar.gz"
+
+tar --create --gzip --file "${archive}" /etc
+find "${destination}" -type f -name "{{ inventory_hostname }}-config-*.tar.gz" \
+  -mtime +{{ backup_retention_days }} -delete
+

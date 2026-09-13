@@ -1,0 +1,9 @@
+Host: {{ inventory_hostname }}
+Generated: {{ ansible_date_time.iso8601 }}
+Operating system: {{ ansible_distribution }} {{ ansible_distribution_version }}
+Memory: {{ ansible_memtotal_mb }} MB
+Required service status:
+{% for result in windows_service_status.results %}
+- {{ result.item }}: {{ result.services[0].state if result.services | length > 0 else 'not found' }}
+{% endfor %}
+

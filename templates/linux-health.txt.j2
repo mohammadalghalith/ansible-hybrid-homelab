@@ -1,0 +1,9 @@
+Host: {{ inventory_hostname }}
+Generated: {{ ansible_date_time.iso8601 }}
+Operating system: {{ ansible_distribution }} {{ ansible_distribution_version }}
+Kernel: {{ ansible_kernel }}
+Memory: {{ ansible_memtotal_mb }} MB
+Root disk available: {{ ansible_mounts | selectattr('mount', 'equalto', '/') | map(attribute='size_available') | first | default('unknown') }} bytes
+Failed services:
+{{ failed_services.stdout | default('None') }}
+
